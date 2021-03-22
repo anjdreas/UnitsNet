@@ -365,8 +365,8 @@ namespace UnitsNet.Tests
         [Fact]
         public void ToString_ReturnsValueAndUnitAbbreviationInCurrentCulture()
         {
-            var prevCulture = Thread.CurrentThread.CurrentUICulture;
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-US");
+            var prevCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
             try {
                 Assert.Equal("1 g/kWh", new BrakeSpecificFuelConsumption(1, BrakeSpecificFuelConsumptionUnit.GramPerKiloWattHour).ToString());
                 Assert.Equal("1 kg/J", new BrakeSpecificFuelConsumption(1, BrakeSpecificFuelConsumptionUnit.KilogramPerJoule).ToString());
@@ -374,7 +374,7 @@ namespace UnitsNet.Tests
             }
             finally
             {
-                Thread.CurrentThread.CurrentUICulture = prevCulture;
+                Thread.CurrentThread.CurrentCulture = prevCulture;
             }
         }
 
@@ -392,10 +392,10 @@ namespace UnitsNet.Tests
         [Fact]
         public void ToString_SFormat_FormatsNumberWithGivenDigitsAfterRadixForCurrentCulture()
         {
-            var oldCulture = CultureInfo.CurrentUICulture;
+            var oldCulture = CultureInfo.CurrentCulture;
             try
             {
-                CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
                 Assert.Equal("0.1 kg/J", new BrakeSpecificFuelConsumption(0.123456, BrakeSpecificFuelConsumptionUnit.KilogramPerJoule).ToString("s1"));
                 Assert.Equal("0.12 kg/J", new BrakeSpecificFuelConsumption(0.123456, BrakeSpecificFuelConsumptionUnit.KilogramPerJoule).ToString("s2"));
                 Assert.Equal("0.123 kg/J", new BrakeSpecificFuelConsumption(0.123456, BrakeSpecificFuelConsumptionUnit.KilogramPerJoule).ToString("s3"));
@@ -403,7 +403,7 @@ namespace UnitsNet.Tests
             }
             finally
             {
-                CultureInfo.CurrentUICulture = oldCulture;
+                CultureInfo.CurrentCulture = oldCulture;
             }
         }
 
@@ -433,10 +433,10 @@ namespace UnitsNet.Tests
         }
 
         [Fact]
-        public void ToString_NullProvider_EqualsCurrentUICulture()
+        public void ToString_NullProvider_EqualsCurrentCulture()
         {
             var quantity = BrakeSpecificFuelConsumption.FromKilogramsPerJoule(1.0);
-            Assert.Equal(quantity.ToString(CultureInfo.CurrentUICulture, "g"), quantity.ToString(null, "g"));
+            Assert.Equal(quantity.ToString(CultureInfo.CurrentCulture, "g"), quantity.ToString(null, "g"));
         }
 
 

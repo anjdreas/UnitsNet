@@ -755,8 +755,8 @@ namespace UnitsNet.Tests
         [Fact]
         public void ToString_ReturnsValueAndUnitAbbreviationInCurrentCulture()
         {
-            var prevCulture = Thread.CurrentThread.CurrentUICulture;
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-US");
+            var prevCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
             try {
                 Assert.Equal("1 cN·m/deg", new RotationalStiffness(1, RotationalStiffnessUnit.CentinewtonMeterPerDegree).ToString());
                 Assert.Equal("1 cN·mm/deg", new RotationalStiffness(1, RotationalStiffnessUnit.CentinewtonMillimeterPerDegree).ToString());
@@ -794,7 +794,7 @@ namespace UnitsNet.Tests
             }
             finally
             {
-                Thread.CurrentThread.CurrentUICulture = prevCulture;
+                Thread.CurrentThread.CurrentCulture = prevCulture;
             }
         }
 
@@ -842,10 +842,10 @@ namespace UnitsNet.Tests
         [Fact]
         public void ToString_SFormat_FormatsNumberWithGivenDigitsAfterRadixForCurrentCulture()
         {
-            var oldCulture = CultureInfo.CurrentUICulture;
+            var oldCulture = CultureInfo.CurrentCulture;
             try
             {
-                CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
                 Assert.Equal("0.1 N·m/rad", new RotationalStiffness(0.123456, RotationalStiffnessUnit.NewtonMeterPerRadian).ToString("s1"));
                 Assert.Equal("0.12 N·m/rad", new RotationalStiffness(0.123456, RotationalStiffnessUnit.NewtonMeterPerRadian).ToString("s2"));
                 Assert.Equal("0.123 N·m/rad", new RotationalStiffness(0.123456, RotationalStiffnessUnit.NewtonMeterPerRadian).ToString("s3"));
@@ -853,7 +853,7 @@ namespace UnitsNet.Tests
             }
             finally
             {
-                CultureInfo.CurrentUICulture = oldCulture;
+                CultureInfo.CurrentCulture = oldCulture;
             }
         }
 
@@ -883,10 +883,10 @@ namespace UnitsNet.Tests
         }
 
         [Fact]
-        public void ToString_NullProvider_EqualsCurrentUICulture()
+        public void ToString_NullProvider_EqualsCurrentCulture()
         {
             var quantity = RotationalStiffness.FromNewtonMetersPerRadian(1.0);
-            Assert.Equal(quantity.ToString(CultureInfo.CurrentUICulture, "g"), quantity.ToString(null, "g"));
+            Assert.Equal(quantity.ToString(CultureInfo.CurrentCulture, "g"), quantity.ToString(null, "g"));
         }
 
 

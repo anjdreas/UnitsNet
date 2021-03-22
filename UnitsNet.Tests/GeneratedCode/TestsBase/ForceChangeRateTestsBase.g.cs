@@ -469,8 +469,8 @@ namespace UnitsNet.Tests
         [Fact]
         public void ToString_ReturnsValueAndUnitAbbreviationInCurrentCulture()
         {
-            var prevCulture = Thread.CurrentThread.CurrentUICulture;
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-US");
+            var prevCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
             try {
                 Assert.Equal("1 cN/s", new ForceChangeRate(1, ForceChangeRateUnit.CentinewtonPerSecond).ToString());
                 Assert.Equal("1 daN/min", new ForceChangeRate(1, ForceChangeRateUnit.DecanewtonPerMinute).ToString());
@@ -486,7 +486,7 @@ namespace UnitsNet.Tests
             }
             finally
             {
-                Thread.CurrentThread.CurrentUICulture = prevCulture;
+                Thread.CurrentThread.CurrentCulture = prevCulture;
             }
         }
 
@@ -512,10 +512,10 @@ namespace UnitsNet.Tests
         [Fact]
         public void ToString_SFormat_FormatsNumberWithGivenDigitsAfterRadixForCurrentCulture()
         {
-            var oldCulture = CultureInfo.CurrentUICulture;
+            var oldCulture = CultureInfo.CurrentCulture;
             try
             {
-                CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
                 Assert.Equal("0.1 N/s", new ForceChangeRate(0.123456, ForceChangeRateUnit.NewtonPerSecond).ToString("s1"));
                 Assert.Equal("0.12 N/s", new ForceChangeRate(0.123456, ForceChangeRateUnit.NewtonPerSecond).ToString("s2"));
                 Assert.Equal("0.123 N/s", new ForceChangeRate(0.123456, ForceChangeRateUnit.NewtonPerSecond).ToString("s3"));
@@ -523,7 +523,7 @@ namespace UnitsNet.Tests
             }
             finally
             {
-                CultureInfo.CurrentUICulture = oldCulture;
+                CultureInfo.CurrentCulture = oldCulture;
             }
         }
 
@@ -553,10 +553,10 @@ namespace UnitsNet.Tests
         }
 
         [Fact]
-        public void ToString_NullProvider_EqualsCurrentUICulture()
+        public void ToString_NullProvider_EqualsCurrentCulture()
         {
             var quantity = ForceChangeRate.FromNewtonsPerSecond(1.0);
-            Assert.Equal(quantity.ToString(CultureInfo.CurrentUICulture, "g"), quantity.ToString(null, "g"));
+            Assert.Equal(quantity.ToString(CultureInfo.CurrentCulture, "g"), quantity.ToString(null, "g"));
         }
 
 

@@ -521,8 +521,8 @@ namespace UnitsNet.Tests
         [Fact]
         public void ToString_ReturnsValueAndUnitAbbreviationInCurrentCulture()
         {
-            var prevCulture = Thread.CurrentThread.CurrentUICulture;
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-US");
+            var prevCulture = Thread.CurrentThread.CurrentCulture;
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
             try {
                 Assert.Equal("1 daN", new Force(1, ForceUnit.Decanewton).ToString());
                 Assert.Equal("1 dyn", new Force(1, ForceUnit.Dyn).ToString());
@@ -542,7 +542,7 @@ namespace UnitsNet.Tests
             }
             finally
             {
-                Thread.CurrentThread.CurrentUICulture = prevCulture;
+                Thread.CurrentThread.CurrentCulture = prevCulture;
             }
         }
 
@@ -572,10 +572,10 @@ namespace UnitsNet.Tests
         [Fact]
         public void ToString_SFormat_FormatsNumberWithGivenDigitsAfterRadixForCurrentCulture()
         {
-            var oldCulture = CultureInfo.CurrentUICulture;
+            var oldCulture = CultureInfo.CurrentCulture;
             try
             {
-                CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
+                CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
                 Assert.Equal("0.1 N", new Force(0.123456, ForceUnit.Newton).ToString("s1"));
                 Assert.Equal("0.12 N", new Force(0.123456, ForceUnit.Newton).ToString("s2"));
                 Assert.Equal("0.123 N", new Force(0.123456, ForceUnit.Newton).ToString("s3"));
@@ -583,7 +583,7 @@ namespace UnitsNet.Tests
             }
             finally
             {
-                CultureInfo.CurrentUICulture = oldCulture;
+                CultureInfo.CurrentCulture = oldCulture;
             }
         }
 
@@ -613,10 +613,10 @@ namespace UnitsNet.Tests
         }
 
         [Fact]
-        public void ToString_NullProvider_EqualsCurrentUICulture()
+        public void ToString_NullProvider_EqualsCurrentCulture()
         {
             var quantity = Force.FromNewtons(1.0);
-            Assert.Equal(quantity.ToString(CultureInfo.CurrentUICulture, "g"), quantity.ToString(null, "g"));
+            Assert.Equal(quantity.ToString(CultureInfo.CurrentCulture, "g"), quantity.ToString(null, "g"));
         }
 
 
